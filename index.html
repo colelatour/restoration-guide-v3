@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Restoration Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;--navy-deep:#0f1829;--navy-mid:#243260;
+  --gold:#c9a84c;--gold-light:#e8c96a;--gold-pale:#f5e9c8;
+  --stone:#f7f4ef;--stone-mid:#ede8df;
+  --white:#ffffff;--text-mid:#3d4f6b;--text-light:#6b7fa0;
+  --cream:#faf8f4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);line-height:1.6;font-size:16px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,24,41,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--gold-light);letter-spacing:.02em;cursor:pointer;white-space:nowrap}
+.nav-links{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+.nav-link{background:none;border:none;color:rgba(255,255,255,.65);font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding:.4rem .65rem;cursor:pointer;border-radius:4px;transition:color .2s,background .2s}
+.nav-link:hover,.nav-link.active{color:var(--gold-light);background:rgba(201,168,76,.1)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;transition:all .3s}
+
+/* PAGES */
+.page{display:none;padding-top:62px}
+.page.active{display:block}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(155deg,var(--navy-deep) 0%,var(--navy) 55%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18;filter:grayscale(30%)}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,24,41,.3) 0%,rgba(15,24,41,.6) 100%)}
+.hero-inner{position:relative;z-index:1;max-width:700px}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,5.5rem);font-weight:600;color:var(--white);line-height:1.08;margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:var(--gold-light)}
+.hero-sub{font-size:1.1rem;color:rgba(255,255,255,.65);max-width:540px;margin:0 auto 2.5rem;font-weight:300;line-height:1.85}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:rgba(255,255,255,.25);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+.scroll-hint::after{content:'';width:1px;height:40px;background:linear-gradient(to bottom,rgba(201,168,76,.5),transparent)}
+
+/* BUTTONS */
+.btn-primary{background:var(--gold);color:var(--navy-deep);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 1.8rem;border:none;border-radius:3px;cursor:pointer;transition:background .2s,transform .2s}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.85rem 1.8rem;border:1px solid rgba(255,255,255,.25);border-radius:3px;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+.btn-outline{background:transparent;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:.75rem 1.6rem;border:1px solid var(--stone-mid);border-radius:3px;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+/* SECTIONS */
+.section{padding:5rem 2rem}
+.section-inner{max-width:960px;margin:0 auto}
+.section-inner.wide{max-width:1100px}
+.section-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.85rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--navy);line-height:1.15;margin-bottom:1.25rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-lead{font-size:1.05rem;color:var(--text-mid);line-height:1.9;margin-bottom:2.5rem;max-width:700px}
+.bg-navy{background:var(--navy)}
+.bg-navy .section-label{color:var(--gold)}
+.bg-navy .section-title{color:var(--white)}
+.bg-navy .section-title em{color:var(--gold-light)}
+.bg-navy .section-lead{color:rgba(255,255,255,.6)}
+.bg-stone{background:var(--stone)}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:2rem}
+.card{background:var(--white);border:1px solid var(--stone-mid);border-radius:6px;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s}
+.card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 36px rgba(26,39,68,.09)}
+.card-img{width:100%;height:160px;object-fit:cover;display:block;background:var(--stone)}
+.card-body{padding:1.5rem}
+.card-icon{width:36px;height:36px;margin-bottom:1rem}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--navy);margin-bottom:.5rem}
+.card p{font-size:.9rem;color:var(--text-mid);line-height:1.7}
+.card-arrow{display:inline-block;margin-top:1rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:500}
+
+/* IMAGE CAPTION */
+.img-caption{font-size:.72rem;color:var(--text-light);letter-spacing:.03em;text-align:center;margin-top:.4rem}
+.img-caption a{color:var(--gold);text-decoration:none}
+.img-caption a:hover{text-decoration:underline}
+
+/* CONTENT HERO */
+.content-hero{background:var(--navy);padding:7rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
+.content-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.2;filter:grayscale(20%)}
+.content-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,24,41,.5),rgba(26,39,68,.85))}
+.content-hero-inner{position:relative;z-index:1}
+.content-hero .section-label{color:var(--gold)}
+.content-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:600;color:var(--white);line-height:1.1}
+.content-hero p{font-size:1rem;color:rgba(255,255,255,.55);max-width:560px;margin:1rem auto 0;font-weight:300;line-height:1.8}
+
+/* PROSE */
+.prose{max-width:740px;margin:0 auto}
+.prose h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:600;color:var(--navy);margin:2.5rem 0 .85rem}
+.prose h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--navy);margin:2rem 0 .6rem}
+.prose p{color:var(--text-mid);line-height:1.92;margin-bottom:1.25rem;font-size:.97rem}
+.prose blockquote{border-left:3px solid var(--gold);padding:1rem 1.5rem;margin:2rem 0;background:var(--stone);border-radius:0 6px 6px 0}
+.prose blockquote p{margin:0;font-style:italic;color:var(--navy);font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.7}
+.prose blockquote cite{display:block;margin-top:.6rem;font-size:.75rem;letter-spacing:.06em;color:var(--text-light);font-style:normal;text-transform:uppercase}
+.source-tag{display:inline-block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;background:var(--gold-pale);color:var(--navy);padding:.22rem .55rem;border-radius:3px;margin-bottom:.4rem;font-weight:500}
+.fact-box{background:var(--stone);border-left:3px solid var(--navy);border-radius:0 6px 6px 0;padding:1.1rem 1.4rem;margin:1.5rem 0}
+.fact-box h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin-bottom:.4rem;font-weight:500}
+.fact-box p{margin:0;font-size:.9rem;color:var(--text-mid)}
+.page-nav{display:flex;justify-content:center;gap:1rem;margin-top:3rem;flex-wrap:wrap}
+
+/* INLINE IMAGE */
+.prose-img{width:100%;border-radius:6px;margin:2rem 0 .4rem;object-fit:cover;display:block}
+.prose-img-half{float:right;width:45%;margin:0 0 1.5rem 2rem;border-radius:6px;object-fit:cover}
+.clearfix::after{content:'';display:table;clear:both}
+
+/* TIMELINE */
+.tl-filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:3rem;justify-content:center}
+.tf{font-size:.76rem;padding:.45rem 1rem;border-radius:3px;cursor:pointer;border:1px solid var(--stone-mid);background:var(--white);color:var(--text-mid);font-family:'DM Sans',sans-serif;letter-spacing:.04em;transition:all .2s}
+.tf:hover{border-color:var(--gold);color:var(--gold)}
+.tf.on{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.timeline{position:relative;padding:1rem 0}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--stone-mid);transform:translateX(-50%)}
+.tl-item{display:flex;gap:2rem;align-items:flex-start;margin-bottom:3.5rem;position:relative}
+.tl-item:nth-child(odd){flex-direction:row}
+.tl-item:nth-child(even){flex-direction:row-reverse}
+.tl-item:nth-child(even) .tl-content{align-items:flex-end;text-align:right}
+.tl-dot{position:absolute;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:var(--gold);border:3px solid var(--stone);box-shadow:0 0 0 2px var(--gold);top:5px;z-index:2;flex-shrink:0}
+.tl-side{flex:1}
+.tl-content{display:flex;flex-direction:column;padding:0 2rem}
+.tl-thumb{width:100%;max-width:220px;height:130px;object-fit:cover;border-radius:5px;margin-bottom:.75rem;display:block}
+.tl-item:nth-child(even) .tl-thumb{align-self:flex-end}
+.tl-year{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--gold)}
+.tl-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--navy);margin:.2rem 0}
+.tl-desc{font-size:.87rem;color:var(--text-mid);line-height:1.7}
+.tl-badge{display:inline-block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;background:var(--gold-pale);color:var(--navy);padding:.18rem .5rem;border-radius:3px;margin-top:.5rem;font-weight:500;align-self:flex-start}
+.tl-item:nth-child(even) .tl-badge{align-self:flex-end}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--stone-mid)}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:1.4rem 0;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-toggle{font-size:1.4rem;color:var(--gold);flex-shrink:0;font-family:'DM Sans',sans-serif;font-weight:300}
+.faq-a{padding:0 0 1.4rem;color:var(--text-mid);line-height:1.88;font-size:.95rem;display:none}
+.faq-a.open{display:block}
+.faq-a a{color:var(--gold);text-decoration:none}
+.faq-a a:hover{text-decoration:underline}
+
+/* SOURCES */
+.source-entry{background:var(--white);border:1px solid var(--stone-mid);border-radius:6px;padding:1.4rem 1.5rem;margin-bottom:1rem}
+.source-entry h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--navy);margin-bottom:.35rem}
+.source-entry p{font-size:.87rem;color:var(--text-mid);margin-bottom:.3rem}
+.source-entry a{font-size:.87rem;color:var(--gold);text-decoration:none}
+.source-entry a:hover{text-decoration:underline}
+.source-tier{display:inline-block;font-size:.67rem;letter-spacing:.09em;text-transform:uppercase;padding:.2rem .5rem;border-radius:3px;font-weight:500;margin-bottom:.5rem}
+.tier-1{background:#e0f2ec;color:#1a5c47}
+.tier-2{background:#dce8f5;color:#1a3a6b}
+.tier-3{background:#f5eedc;color:#5c4a1a}
+
+/* MISSIONARY CTA */
+.missionary-cta{background:var(--navy-deep);border-radius:8px;padding:3rem 2rem;text-align:center;margin:3rem 0;border:1px solid rgba(201,168,76,.2)}
+.missionary-cta h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--white);margin-bottom:.75rem}
+.missionary-cta p{color:rgba(255,255,255,.55);margin-bottom:2rem;font-size:.95rem;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.75}
+
+/* DISCLAIMER & FOOTER */
+.disclaimer{background:var(--stone);border:1px solid var(--stone-mid);border-radius:6px;padding:1.2rem 1.5rem;margin:2rem 0;font-size:.82rem;color:var(--text-light);line-height:1.7}
+footer{background:var(--navy-deep);color:rgba(255,255,255,.35);text-align:center;padding:2.5rem 2rem;font-size:.82rem;line-height:1.85}
+footer a{color:var(--gold);text-decoration:none}
+
+/* ICONS (SVG inline) */
+.icon-wrap{width:44px;height:44px;border-radius:50%;background:var(--gold-pale);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+.icon-wrap svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:62px;left:0;right:0;background:rgba(15,24,41,.98);padding:1rem;gap:4px;border-bottom:1px solid rgba(201,168,76,.2)}
+  .hamburger{display:flex}
+  .timeline::before{left:20px}
+  .tl-item,.tl-item:nth-child(even){flex-direction:column;padding-left:50px;text-align:left}
+  .tl-dot{left:14px;transform:none}
+  .tl-item:nth-child(even) .tl-content{align-items:flex-start;text-align:left}
+  .tl-item:nth-child(even) .tl-badge,.tl-item:nth-child(even) .tl-thumb{align-self:flex-start}
+  .tl-content{padding:0}
+  .hero h1{font-size:2.6rem}
+  .card-grid{grid-template-columns:1fr}
+  .section{padding:3rem 1.25rem}
+  .prose-img-half{float:none;width:100%;margin:1rem 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">✦ The Restoration Guide</div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <button class="nav-link" onclick="showPage('apostasy')">The Apostasy</button>
+      <button class="nav-link" onclick="showPage('firstvision')">First Vision</button>
+      <button class="nav-link" onclick="showPage('bom')">Book of Mormon</button>
+      <button class="nav-link" onclick="showPage('priesthood')">Priesthood</button>
+      <button class="nav-link" onclick="showPage('timeline')">Timeline</button>
+      <button class="nav-link" onclick="showPage('faq')">FAQ</button>
+      <button class="nav-link" onclick="showPage('sources')">Sources</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HOME
+══════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <!-- Sacred Grove, Palmyra NY — Wikimedia Commons CC-BY-SA -->
+    <div class="hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default')"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">An Independent Educational Project</div>
+      <h1>Understanding<br/><em>The Restoration</em></h1>
+      <p class="hero-sub">A clear, evidence-based guide to the Restoration of the gospel of Jesus Christ — for the curious, the skeptical, and those seeking to understand.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('apostasy')">Start Here</button>
+        <button class="btn-secondary" onclick="showPage('timeline')">View Timeline</button>
+      </div>
+    </div>
+    <div class="scroll-hint">Explore</div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner wide">
+      <div class="section-label">What is this?</div>
+      <h2 class="section-title">A guide to one of history's<br/><em>most remarkable claims</em></h2>
+      <p class="section-lead">In the early 1800s, a young man in upstate New York claimed to have spoken with God. What followed was a series of events that led to the founding of a religion now practiced by over 17 million people worldwide. This guide examines what happened, what is claimed, and what evidence supports those claims.</p>
+      <div class="card-grid">
+
+        <div class="card" onclick="showPage('apostasy')">
+          <img class="card-img" src="https://www.churchofjesuschrist.org/imgs/27eb24ef6367b614d4909c283368e50b17737212/full/1200%2C/0/default" alt="Council of Nicaea, 16th century depiction" loading="lazy" />
+          <div class="card-body">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>The Great Apostasy</h3>
+            <p>Why did followers of Christ believe the original church was lost? What happened after the apostles died?</p>
+            <span class="card-arrow">Explore →</span>
+          </div>
+        </div>
+
+        <div class="card" onclick="showPage('firstvision')">
+          <img class="card-img" src="https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default" alt="The Sacred Grove, Palmyra, New York" loading="lazy" />
+          <div class="card-body">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </div>
+            <h3>The First Vision</h3>
+            <p>In the spring of 1820, Joseph Smith reported a divine visitation. What did he claim to see, and how is that claim supported?</p>
+            <span class="card-arrow">Explore →</span>
+          </div>
+        </div>
+
+        <div class="card" onclick="showPage('bom')">
+          <img class="card-img" src="https://www.churchofjesuschrist.org/imgs/671e85a694ea9da1b106afde7a37f8554d414215/full/1200%2C/0/default" alt="First edition of the Book of Mormon, 1830" loading="lazy" />
+          <div class="card-body">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            </div>
+            <h3>The Book of Mormon</h3>
+            <p>An ancient record or a 19th-century invention? Examine the origin, translation, and significance of this scripture.</p>
+            <span class="card-arrow">Explore →</span>
+          </div>
+        </div>
+
+        <div class="card" onclick="showPage('priesthood')">
+          <img class="card-img" src="https://www.churchofjesuschrist.org/imgs/f1e7548b53fc4695fb67bef691fa159b36154dee/full/1200%2C/0/default" alt="Hill Cumorah monument, Palmyra, New York" loading="lazy" />
+          <div class="card-body">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Restoration of the Priesthood</h3>
+            <p>The authority to act in God's name — claimed to have been lost and then restored through divine messengers.</p>
+            <span class="card-arrow">Explore →</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section bg-navy">
+    <div class="section-inner">
+      <div class="missionary-cta">
+        <h2>Want to Learn More in Person?</h2>
+        <p>Missionaries from The Church of Jesus Christ of Latter-day Saints are available worldwide to answer your questions and meet with you personally — at no cost and with no obligation.</p>
+        <button class="btn-primary" onclick="window.open('https://www.churchofjesuschrist.org/comeuntochrist/requests/missionary','_blank')">Meet with Missionaries ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section bg-stone">
+    <div class="section-inner">
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> The Restoration Guide is an independent educational project created by Cole LaTour for coursework and personal learning purposes. It is not affiliated with, sponsored by, endorsed by, or officially connected to The Church of Jesus Christ of Latter-day Saints. All information is cited and sourced; readers are encouraged to consult primary sources directly.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Restoration Guide · Created by Cole LaTour · REL C 225 · Brigham Young University</p>
+    <p>Not an official publication of <a href="https://www.churchofjesuschrist.org" target="_blank">The Church of Jesus Christ of Latter-day Saints</a></p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     THE APOSTASY
+══════════════════════════════════════ -->
+<div id="page-apostasy" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/27eb24ef6367b614d4909c283368e50b17737212/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">Context &amp; Background</div>
+      <h1>The Great Apostasy</h1>
+      <p>Understanding why followers of Christ believed divine authority was lost from the earth — and why it needed to be restored.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div class="prose">
+        <span class="source-tag">Historical Fact + Official Church Teaching</span>
+        <h2>What is an Apostasy?</h2>
+        <p>The word "apostasy" comes from the Greek <em>apostasia</em>, meaning a falling away or defection. In Christianity, it refers to the belief that after the death of Jesus Christ and His original apostles, essential doctrines, ordinances, and priesthood authority were lost or corrupted from the earth.</p>
+        <p>This is not merely a Latter-day Saint claim. Many Protestant reformers — including Martin Luther, John Calvin, and John Wesley — acknowledged that the early church had undergone significant corruption over the centuries.</p>
+
+        <div class="clearfix">
+          <img class="prose-img-half" src="https://www.churchofjesuschrist.org/imgs/27eb24ef6367b614d4909c283368e50b17737212/full/1200%2C/0/default" alt="Depiction of the Council of Nicaea, 325 AD" loading="lazy" />
+          <div class="fact-box">
+            <h4>Historical Fact</h4>
+            <p>The First Council of Nicaea (325 AD) revised foundational Christian doctrine under Emperor Constantine — an event many historians point to as evidence of significant doctrinal change from the primitive church.</p>
+          </div>
+          <p class="img-caption" style="text-align:left;margin-top:-1rem;margin-bottom:1.5rem">"Moroni Shows the Gold Plates to Joseph, Oliver, and David" · William L. Maughan · <a href="https://www.churchofjesuschrist.org/media/image/joseph-witnesses-moroni-gold-plates-27eb24e" target="_blank">Church of Jesus Christ Media Library</a></p>
+        </div>
+
+        <h2>What Does the New Testament Say?</h2>
+        <blockquote>
+          <p>"For I know this, that after my departing shall grievous wolves enter in among you, not sparing the flock. Also of your own selves shall men arise, speaking perverse things, to draw away disciples after them."</p>
+          <cite>— Acts 20:29–30 (KJV), Paul's warning to the Ephesian elders</cite>
+        </blockquote>
+        <blockquote>
+          <p>"Let no man deceive you by any means: for that day shall not come, except there come a falling away first..."</p>
+          <cite>— 2 Thessalonians 2:3 (KJV)</cite>
+        </blockquote>
+
+        <span class="source-tag">Official Church Teaching</span>
+        <h2>Reformation vs. Restoration</h2>
+        <p>Protestant reformers sought to <em>reform</em> an existing church. Joseph Smith claimed to restore something entirely lost — including the authority, ordinances, and organizational structure of the original church established by Jesus Christ. Without priesthood authority, no amount of reform could reconstitute the saving ordinances.</p>
+
+        <div class="fact-box">
+          <h4>Scholarly Interpretation</h4>
+          <p>Historian Richard Bushman writes that Joseph Smith's claim was not that Christianity had merely drifted but that "the heavens had closed" and divine communication had ceased — making reformation insufficient. (<em>Rough Stone Rolling</em>, 2005)</p>
+        </div>
+
+        <h2>A Fair Question</h2>
+        <p>If God exists and established a church, why would He allow it to be lost? The Latter-day Saint answer draws on biblical precedent: the Old Testament records multiple apostasies among God's covenant people, always followed by prophetic restoration. The pattern of apostasy and restoration is, in this view, a recurring feature of religious history.</p>
+      </div>
+      <div class="page-nav">
+        <button class="btn-primary" onclick="showPage('firstvision')">Next: The First Vision →</button>
+      </div>
+    </div>
+  </div>
+  <footer><p>The Restoration Guide · Not an official publication of The Church of Jesus Christ of Latter-day Saints</p></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     FIRST VISION
+══════════════════════════════════════ -->
+<div id="page-firstvision" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">Spring 1820</div>
+      <h1>The First Vision</h1>
+      <p>The foundational claim of the Restoration — a young man's prayer and what he reported followed.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div class="prose">
+        <span class="source-tag">Historical Fact + Official Church Teaching</span>
+        <h2>The Setting</h2>
+        <p>In the early 1800s, western New York was swept by intense religious revivals known as the "burned-over district." Joseph Smith, then 14, found himself amid competing religious claims. Turning to James 1:5 — "If any of you lack wisdom, let him ask of God" — he decided to pray in a grove of trees near his family's farm.</p>
+
+        <img class="prose-img" src="https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default" alt="The Sacred Grove on the Joseph Smith Farm, Palmyra, New York" loading="lazy" />
+        <p class="img-caption">The "First Vision" · Walter Rane · <a href="https://www.churchofjesuschrist.org/media/image/walter-rane-first-vision-91bbd03" target="_blank">Church of Jesus Christ Media Library</a></p>
+
+        <div class="fact-box">
+          <h4>Historical Fact</h4>
+          <p>The "burned-over district" of western New York is well-documented. Whitney Cross's <em>The Burned-Over District</em> (Cornell University Press, 1950) remains the definitive secular history of this religious environment.</p>
+        </div>
+
+        <h2>The Account</h2>
+        <p>Joseph Smith recorded multiple accounts of the First Vision (1832, 1835, 1838, 1842). The most widely published is the 1838 account, canonized as Joseph Smith—History:</p>
+        <blockquote>
+          <p>"I saw a pillar of light exactly over my head, above the brightness of the sun... When the light rested upon me I saw two Personages, whose brightness and glory defy all description, standing above me in the air. One of them spake unto me, calling me by name and said, pointing to the other — <em>This is My Beloved Son. Hear Him!</em>"</p>
+          <cite>— Joseph Smith—History 1:16–17</cite>
+        </blockquote>
+
+        <span class="source-tag">Scholarly Interpretation</span>
+        <h2>Multiple Accounts: A Problem or Evidence?</h2>
+        <p>The accounts do differ in some emphasis — the 1832 account focuses on forgiveness of sins; the 1838 account adds detail about two distinct beings. The Church published a Gospel Topics Essay, "First Vision Accounts," which addresses these differences openly. Historian Steven C. Harper argues in <em>Joseph Smith's First Vision</em> (2012) that the differences are complements rather than contradictions — each account highlighting aspects relevant to its audience.</p>
+
+        <div class="fact-box">
+          <h4>Official Church Teaching</h4>
+          <p>Latter-day Saints teach that God the Father and Jesus Christ are separate, distinct beings — a doctrine foundational to the First Vision and a major departure from traditional Trinitarian Christianity.</p>
+        </div>
+      </div>
+      <div class="page-nav">
+        <button class="btn-outline" onclick="showPage('apostasy')">← The Apostasy</button>
+        <button class="btn-primary" onclick="showPage('bom')">Next: Book of Mormon →</button>
+      </div>
+    </div>
+  </div>
+  <footer><p>The Restoration Guide · Not an official publication of The Church of Jesus Christ of Latter-day Saints</p></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     BOOK OF MORMON
+══════════════════════════════════════ -->
+<div id="page-bom" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/671e85a694ea9da1b106afde7a37f8554d414215/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">1823–1830</div>
+      <h1>The Book of Mormon</h1>
+      <p>Another testament of Jesus Christ — its origin, translation, and significance to the Restoration.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div class="prose">
+        <span class="source-tag">Official Church Teaching</span>
+        <h2>What Is the Book of Mormon?</h2>
+        <p>The Book of Mormon is a volume of scripture used alongside the Bible by Latter-day Saints. It claims to be an ancient record of peoples in the Americas from approximately 600 BC to 421 AD, centered on the ministry of Jesus Christ — including His appearance in the Americas after His resurrection.</p>
+
+        <div class="clearfix">
+          <img class="prose-img-half" src="https://www.churchofjesuschrist.org/imgs/671e85a694ea9da1b106afde7a37f8554d414215/full/1200%2C/0/default" alt="First edition of the Book of Mormon, printed by E.B. Grandin, 1830" loading="lazy" />
+          <p>Joseph Smith said he translated the record from gold plates he retrieved from a hill in upstate New York (Hill Cumorah) under the direction of an angel named Moroni. The original 1830 edition was printed by E.B. Grandin in Palmyra, New York in a print run of 5,000 copies.</p>
+          <p class="img-caption" style="text-align:left">"Brother Joseph" portrait · <a href="https://www.churchofjesuschrist.org/media/image/joseph-smith-lindsley-671e85a" target="_blank">Church of Jesus Christ Media Library</a></p>
+        </div>
+
+        <h2>The Translation Process</h2>
+        <span class="source-tag">Scholarly Interpretation</span>
+        <p>The exact method of translation is a subject of ongoing discussion. The Church's Gospel Topics Essay on Book of Mormon Translation acknowledges that Joseph used a "seer stone" placed in a hat for much of the translation — a detail now openly addressed by the Church.</p>
+
+        <div class="fact-box">
+          <h4>Historical Fact</h4>
+          <p>Eleven witnesses signed formal statements testifying they either saw the gold plates (Three Witnesses) or handled them (Eight Witnesses). None recanted their testimonies, even those who later left the Church under difficult circumstances.</p>
+        </div>
+
+        <h2>The Witnesses</h2>
+        <blockquote>
+          <p>"We declare with words of soberness, that an angel of God came down from heaven, and he brought and laid before our eyes, that we beheld and saw the plates, and the engravings thereon..."</p>
+          <cite>— Testimony of the Three Witnesses, Book of Mormon (Oliver Cowdery, David Whitmer, Martin Harris)</cite>
+        </blockquote>
+
+        <img class="prose-img" src="https://www.churchofjesuschrist.org/imgs/f1e7548b53fc4695fb67bef691fa159b36154dee/full/1200%2C/0/default" alt="Hill Cumorah, Manchester, New York — where Joseph Smith retrieved the gold plates" loading="lazy" />
+        <p class="img-caption">"Elijah Appearing in the Kirtland Temple" · Dan Lewis · <a href="https://www.churchofjesuschrist.org/media/image/elijah-appearing-in-the-kirtland-temple-f1e7548" target="_blank">Church of Jesus Christ Media Library</a></p>
+
+        <span class="source-tag">Scholarly Interpretation</span>
+        <h2>Internal Evidence</h2>
+        <p>Scholars have noted features of the Book of Mormon consistent with ancient literary patterns — including chiasmus, a Hebrew poetic structure essentially unknown in 19th-century American literary culture. John Welch's 1969 discovery of chiasmus in the Book of Mormon sparked decades of analysis. The Neal A. Maxwell Institute at BYU has published extensive scholarship on the book's ancient linguistic features.</p>
+
+        <h2>An Honest Note</h2>
+        <p>Archaeological evidence for the civilizations described remains a subject of significant scholarly debate. The Church does not claim archaeology has "proven" the Book of Mormon. Questions remain; readers are encouraged to engage primary sources directly.</p>
+      </div>
+      <div class="page-nav">
+        <button class="btn-outline" onclick="showPage('firstvision')">← First Vision</button>
+        <button class="btn-primary" onclick="showPage('priesthood')">Next: Priesthood Restoration →</button>
+      </div>
+    </div>
+  </div>
+  <footer><p>The Restoration Guide · Not an official publication of The Church of Jesus Christ of Latter-day Saints</p></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PRIESTHOOD
+══════════════════════════════════════ -->
+<div id="page-priesthood" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/f1e7548b53fc4695fb67bef691fa159b36154dee/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">1829–1830</div>
+      <h1>Restoration of the Priesthood</h1>
+      <p>The authority to act in God's name — claimed to have been lost and then restored through divine messengers.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div class="prose">
+        <span class="source-tag">Official Church Teaching</span>
+        <h2>What Is the Priesthood?</h2>
+        <p>In Latter-day Saint theology, the priesthood is the authority and power of God delegated to man to act in saving ordinances. Without this authority, baptism and other ordinances are not considered valid — making reformation of existing churches insufficient. A new conferral from heaven was required.</p>
+
+        <h2>The Aaronic Priesthood</h2>
+        <span class="source-tag">Historical Fact</span>
+        <p>On May 15, 1829, Joseph Smith and Oliver Cowdery reported that John the Baptist appeared and conferred the Aaronic Priesthood, granting authority to baptize.</p>
+        <blockquote>
+          <p>"Upon you my fellow servants, in the name of Messiah, I confer the Priesthood of Aaron, which holds the keys of the ministering of angels, and of the gospel of repentance, and of baptism by immersion for the remission of sins..."</p>
+          <cite>— Doctrine and Covenants 13:1</cite>
+        </blockquote>
+
+        <h2>The Melchizedek Priesthood</h2>
+        <p>Shortly thereafter, Peter, James, and John appeared and conferred the higher Melchizedek Priesthood — including the keys of the kingdom of God — on Joseph Smith and Oliver Cowdery. This authority became the basis for Church governance and all higher ordinances.</p>
+
+        <div class="fact-box">
+          <h4>Historical Fact</h4>
+          <p>The Church was formally organized on April 6, 1830, in Fayette, New York, with six original members — the minimum legally required under New York state law. (D&amp;C 20; Church History Topics)</p>
+        </div>
+
+        <img class="prose-img" src="https://www.churchofjesuschrist.org/imgs/f1e7548b53fc4695fb67bef691fa159b36154dee/full/1200%2C/0/default" alt="Hill Cumorah monument, Manchester, New York" loading="lazy" />
+        <p class="img-caption">Hill Cumorah, Manchester, New York — site of Joseph Smith's annual visits from the Angel Moroni · <a href="https://commons.wikimedia.org/wiki/File:Hill_Cumorah_with_Angel_Moroni_statue.jpg" target="_blank">Wikimedia Commons</a> · CC BY-SA 3.0</p>
+
+        <h2>A Note on Evidence</h2>
+        <p>The evidence for these events is primarily testimonial — the accounts of Joseph Smith and Oliver Cowdery, written contemporaneously. There are no independent historical witnesses to the visitations themselves. Readers are encouraged to study primary sources at josephsmithpapers.org.</p>
+      </div>
+      <div class="page-nav">
+        <button class="btn-outline" onclick="showPage('bom')">← Book of Mormon</button>
+        <button class="btn-primary" onclick="showPage('timeline')">See the Full Timeline →</button>
+      </div>
+    </div>
+  </div>
+  <footer><p>The Restoration Guide · Not an official publication of The Church of Jesus Christ of Latter-day Saints</p></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     TIMELINE
+══════════════════════════════════════ -->
+<div id="page-timeline" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">Interactive Timeline</div>
+      <h1>The Restoration in Time</h1>
+      <p>Key events from the apostolic era through the formal organization of the Church.</p>
+    </div>
+  </div>
+
+  <div class="section bg-stone">
+    <div class="section-inner wide">
+      <div class="tl-filters">
+        <button class="tf on" onclick="filterTimeline('all',this)">All Events</button>
+        <button class="tf" onclick="filterTimeline('apostasy',this)">Apostasy</button>
+        <button class="tf" onclick="filterTimeline('restoration',this)">Restoration</button>
+        <button class="tf" onclick="filterTimeline('church',this)">Church Organization</button>
+      </div>
+
+      <div class="timeline" id="timeline-container">
+
+        <div class="tl-item" data-cat="apostasy">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <span class="tl-year">~33–100 AD</span>
+            <div class="tl-title">Ministry &amp; Martyrdom of the Apostles</div>
+            <div class="tl-desc">Jesus Christ establishes His church. The apostles are killed one by one; the governing quorum is broken and not replaced with prophetic authority.</div>
+            <span class="tl-badge">Apostasy</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="apostasy">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <img class="tl-thumb" src="https://www.churchofjesuschrist.org/imgs/27eb24ef6367b614d4909c283368e50b17737212/full/1200%2C/0/default" alt="Council of Nicaea" loading="lazy" />
+            <span class="tl-year">325 AD</span>
+            <div class="tl-title">Council of Nicaea</div>
+            <div class="tl-desc">Emperor Constantine convenes a council formalizing the Nicene Creed — defining the nature of God in ways Latter-day Saints argue depart from original Christian teaching.</div>
+            <span class="tl-badge">Apostasy</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="apostasy">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <span class="tl-year">1517</span>
+            <div class="tl-title">Protestant Reformation</div>
+            <div class="tl-desc">Martin Luther posts his 95 Theses. Reformers across Europe challenge Catholic authority — evidence, Latter-day Saints argue, that even insiders recognized the need for restoration.</div>
+            <span class="tl-badge">Apostasy</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="restoration">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <img class="tl-thumb" src="https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default" alt="The Sacred Grove, Palmyra" loading="lazy" />
+            <span class="tl-year">Spring 1820</span>
+            <div class="tl-title">The First Vision</div>
+            <div class="tl-desc">Joseph Smith, age 14, prays in a grove near Palmyra, NY. He reports seeing God the Father and Jesus Christ, who tell him the existing churches have gone astray.</div>
+            <span class="tl-badge">Restoration</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="restoration">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <img class="tl-thumb" src="https://www.churchofjesuschrist.org/imgs/f1e7548b53fc4695fb67bef691fa159b36154dee/full/1200%2C/0/default" alt="Hill Cumorah" loading="lazy" />
+            <span class="tl-year">1823</span>
+            <div class="tl-title">Visit of the Angel Moroni</div>
+            <div class="tl-desc">Joseph Smith reports three nighttime visits from a resurrected being named Moroni, who tells him of an ancient record buried in the nearby Hill Cumorah.</div>
+            <span class="tl-badge">Restoration</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="restoration">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <img class="tl-thumb" src="https://www.churchofjesuschrist.org/imgs/671e85a694ea9da1b106afde7a37f8554d414215/full/1200%2C/0/default" alt="Book of Mormon 1830 edition" loading="lazy" />
+            <span class="tl-year">1827–1829</span>
+            <div class="tl-title">Translation of the Book of Mormon</div>
+            <div class="tl-desc">Joseph receives the gold plates in 1827. With scribes including Oliver Cowdery, he translates the record. Eleven witnesses testify to the plates' existence.</div>
+            <span class="tl-badge">Restoration</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="restoration">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <span class="tl-year">May 15, 1829</span>
+            <div class="tl-title">Aaronic Priesthood Restored</div>
+            <div class="tl-desc">John the Baptist appears and confers the Aaronic Priesthood on Joseph Smith and Oliver Cowdery, granting authority to baptize. (D&amp;C 13)</div>
+            <span class="tl-badge">Restoration</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="restoration">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <span class="tl-year">Spring 1829</span>
+            <div class="tl-title">Melchizedek Priesthood Restored</div>
+            <div class="tl-desc">Peter, James, and John appear and confer the higher Melchizedek Priesthood and keys of the kingdom on Joseph Smith and Oliver Cowdery.</div>
+            <span class="tl-badge">Restoration</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="church">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <img class="tl-thumb" src="https://www.churchofjesuschrist.org/imgs/671e85a694ea9da1b106afde7a37f8554d414215/full/1200%2C/0/default" alt="Book of Mormon 1830 first edition" loading="lazy" />
+            <span class="tl-year">March 26, 1830</span>
+            <div class="tl-title">Book of Mormon Published</div>
+            <div class="tl-desc">Published by E.B. Grandin in Palmyra, NY. The initial print run of 5,000 copies begins what is now a scripture published in over 100 languages.</div>
+            <span class="tl-badge">Church Organization</span>
+          </div></div>
+        </div>
+
+        <div class="tl-item" data-cat="church">
+          <div class="tl-dot"></div>
+          <div class="tl-side"><div class="tl-content">
+            <span class="tl-year">April 6, 1830</span>
+            <div class="tl-title">The Church Formally Organized</div>
+            <div class="tl-desc">The Church of Christ is organized in Fayette, New York with six founding members — the minimum required by NY state law. Later renamed The Church of Jesus Christ of Latter-day Saints.</div>
+            <span class="tl-badge">Church Organization</span>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <footer><p>The Restoration Guide · Not an official publication of The Church of Jesus Christ of Latter-day Saints</p></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     FAQ
+══════════════════════════════════════ -->
+<div id="page-faq" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/91bbd0309d5ce6a6101a32b5258b7b63dd01b796/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">Common Questions</div>
+      <h1>Frequently Asked Questions</h1>
+      <p>Honest answers to common questions about the Restoration, the Church, and Latter-day Saint beliefs.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div id="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Why do Latter-day Saints need another scripture if they have the Bible?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">Latter-day Saints believe God is not limited to speaking once. The Book of Mormon is described as "another testament of Jesus Christ" — not a replacement for the Bible, but a companion scripture confirming its core message. If God spoke to people in the Middle East, why not also to people in the Americas? The Bible itself records God speaking across different peoples and times.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Why Joseph Smith? Why not someone more educated or prominent?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">This question has been asked from the beginning. Latter-day Saints point to biblical precedent: Moses was a shepherd, David a young boy, Paul a persecutor of Christians. Historian Richard Bushman notes in <em>Rough Stone Rolling</em> that Joseph's lack of formal education actually adds credibility — the theological sophistication of his revelations is difficult to explain by reference to his schooling alone.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What happened after the original apostles of Christ died?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">This is the central question the Apostasy page addresses. Latter-day Saints — and many historians — acknowledge that the early church underwent significant doctrinal and organizational changes in the centuries after the apostles' deaths. Councils were convened, creeds were written, and political powers shaped theological decisions. The Latter-day Saint position is that this required a new dispensation, not merely a reformation.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Do Latter-day Saints consider themselves Christian?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">Yes — emphatically. The full name of the Church is The Church of <em>Jesus Christ</em> of Latter-day Saints. Latter-day Saint theology does differ from traditional Nicene Christianity on certain points (such as the nature of God), which leads some to dispute the label. But Latter-day Saints believe in Jesus Christ as Savior and Redeemer — the most fundamental definition of "Christian."</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What do missionaries actually teach?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">Missionaries typically teach: God's relationship with humanity, the Great Apostasy, the First Vision and Joseph Smith's prophetic calling, the Book of Mormon, the restored gospel and its ordinances, and how to receive a personal spiritual witness. There is no cost and no obligation. Meetings happen virtually or in person. <a href="https://www.churchofjesuschrist.org/comeuntochrist/requests/missionary" target="_blank">Request missionaries here →</a></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What about polygamy?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">This deserves an honest answer. The early Church did practice plural marriage, authorized by Joseph Smith. The Church officially discontinued the practice in 1890 under President Wilford Woodruff. The Church has published a detailed Gospel Topics Essay — "Plural Marriage in Kirtland and Nauvoo" — addressing this history openly. Groups that continue polygamy today are not affiliated with The Church of Jesus Christ of Latter-day Saints.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">How can I know if these things are true?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">The Book of Mormon contains a direct invitation: "ask God, the Eternal Father, in the name of Christ, if these things are not true; and if ye shall ask with a sincere heart, with real intent, having faith in Christ, he will manifest the truth of it unto you, by the power of the Holy Ghost." (Moroni 10:4). Beyond the spiritual invitation, this guide encourages intellectual engagement — read primary sources, examine the historical evidence, ask hard questions. Truth-seeking and faith need not be in conflict.</div>
+        </div>
+      </div>
+
+      <div class="missionary-cta">
+        <h2>Still Have Questions?</h2>
+        <p>Missionaries are available worldwide to answer your specific questions in a personal, no-pressure setting — no cost, no obligation.</p>
+        <button class="btn-primary" onclick="window.open('https://www.churchofjesuschrist.org/comeuntochrist/requests/missionary','_blank')">Meet with Missionaries ↗</button>
+      </div>
+    </div>
+  </div>
+  <footer><p>The Restoration Guide · Not an official publication of The Church of Jesus Christ of Latter-day Saints</p></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     SOURCES
+══════════════════════════════════════ -->
+<div id="page-sources" class="page">
+  <div class="content-hero">
+    <div class="content-hero-bg" style="background-image:url('https://www.churchofjesuschrist.org/imgs/671e85a694ea9da1b106afde7a37f8554d414215/full/1200%2C/0/default')"></div>
+    <div class="content-hero-overlay"></div>
+    <div class="content-hero-inner">
+      <div class="section-label">Bibliography &amp; Citations</div>
+      <h1>Sources &amp; Citations</h1>
+      <p>Every factual claim on this site is traceable to a primary or secondary source, organized by reliability tier.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div class="section-label" style="margin-bottom:.75rem">Tier 1 — Primary &amp; Official Sources</div>
+      <div class="source-entry"><span class="source-tier tier-1">Tier 1 · Scripture</span><h4>The Doctrine and Covenants</h4><p>The Church of Jesus Christ of Latter-day Saints. Salt Lake City, UT. Sections 13 and 20 referenced throughout.</p><a href="https://www.churchofjesuschrist.org/study/scriptures/dc-testament" target="_blank">churchofjesuschrist.org ↗</a></div>
+      <div class="source-entry"><span class="source-tier tier-1">Tier 1 · Scripture</span><h4>Joseph Smith—History (Pearl of Great Price)</h4><p>The Church of Jesus Christ of Latter-day Saints. The canonized 1838 First Vision account.</p><a href="https://www.churchofjesuschrist.org/study/scriptures/pgp/js-h/1" target="_blank">churchofjesuschrist.org ↗</a></div>
+      <div class="source-entry"><span class="source-tier tier-1">Tier 1 · Official Church Resource</span><h4>Gospel Topics Essays</h4><p>The Church of Jesus Christ of Latter-day Saints. Essays covering "First Vision Accounts," "Book of Mormon Translation," "Plural Marriage in Kirtland and Nauvoo," and others.</p><a href="https://www.churchofjesuschrist.org/study/manual/gospel-topics-essays" target="_blank">churchofjesuschrist.org ↗</a></div>
+      <div class="source-entry"><span class="source-tier tier-1">Tier 1 · Primary Source Collection</span><h4>Joseph Smith Papers</h4><p>The Church Historian's Press. Comprehensive digitized collection of Joseph Smith's documents, letters, journals, and revelations.</p><a href="https://www.josephsmithpapers.org" target="_blank">josephsmithpapers.org ↗</a></div>
+      <div class="source-entry"><span class="source-tier tier-1">Tier 1 · Official Church Resource</span><h4>Church History Topics</h4><p>The Church of Jesus Christ of Latter-day Saints. Official historical summaries published by the Church History Department.</p><a href="https://www.churchofjesuschrist.org/study/history/topics" target="_blank">churchofjesuschrist.org ↗</a></div>
+
+      <div class="section-label" style="margin:2.5rem 0 .75rem">Tier 2 — Scholarly Academic Sources</div>
+      <div class="source-entry"><span class="source-tier tier-2">Tier 2 · Academic Biography</span><h4>Bushman, Richard L. Joseph Smith: Rough Stone Rolling</h4><p>New York: Alfred A. Knopf, 2005. The definitive scholarly biography of Joseph Smith by a Columbia University historian.</p></div>
+      <div class="source-entry"><span class="source-tier tier-2">Tier 2 · Academic</span><h4>Harper, Steven C. Joseph Smith's First Vision: A Guide to the Historical Accounts</h4><p>Salt Lake City: Deseret Book, 2012. Scholarly analysis of all First Vision accounts by a BYU historian and Church History Department scholar.</p></div>
+      <div class="source-entry"><span class="source-tier tier-2">Tier 2 · Academic History</span><h4>Cross, Whitney R. The Burned-Over District</h4><p>Ithaca: Cornell University Press, 1950. The definitive secular history of the religious environment in which Joseph Smith grew up.</p></div>
+      <div class="source-entry"><span class="source-tier tier-2">Tier 2 · BYU Studies</span><h4>Welch, John W. "Chiasmus in the Book of Mormon"</h4><p>BYU Studies 10, no. 1 (1969). Foundational article documenting chiasmic literary structure in the Book of Mormon.</p></div>
+
+      <div class="section-label" style="margin:2.5rem 0 .75rem">Tier 3 — Supporting Historical Sources</div>
+      <div class="source-entry"><span class="source-tier tier-3">Tier 3 · Historical Context</span><h4>The Holy Bible (King James Version)</h4><p>Referenced for New Testament apostasy warnings (Acts 20:29–30; 2 Thessalonians 2:3) and Old Testament patterns of apostasy and restoration.</p></div>
+
+      <div class="section-label" style="margin:2.5rem 0 .75rem">Image Sources</div>
+      <div class="source-entry"><span class="source-tier tier-1">Images · Church of Jesus Christ Media Library</span><h4>All images courtesy of the Church of Jesus Christ of Latter-day Saints</h4>
+        <p>"First Vision" by Walter Rane — <a href="https://www.churchofjesuschrist.org/media/image/walter-rane-first-vision-91bbd03" target="_blank">churchofjesuschrist.org</a></p>
+        <p>"Moroni Shows the Gold Plates to Joseph, Oliver, and David" by William L. Maughan — <a href="https://www.churchofjesuschrist.org/media/image/joseph-witnesses-moroni-gold-plates-27eb24e" target="_blank">churchofjesuschrist.org</a></p>
+        <p>"Brother Joseph" portrait — <a href="https://www.churchofjesuschrist.org/media/image/joseph-smith-lindsley-671e85a" target="_blank">churchofjesuschrist.org</a></p>
+        <p>"Elijah Appearing in the Kirtland Temple" by Dan Lewis — <a href="https://www.churchofjesuschrist.org/media/image/elijah-appearing-in-the-kirtland-temple-f1e7548" target="_blank">churchofjesuschrist.org</a></p>
+      </div>
+
+      <div class="disclaimer"><strong>Note on Sources:</strong> This guide follows a three-tier source hierarchy. Tier 1 sources (scripture, official Church publications, Joseph Smith Papers) are prioritized. Tier 2 (peer-reviewed scholarship) supplements and contextualizes. Where scholarly disagreement exists, it is noted in the text. No sources have been invented or misrepresented.</div>
+    </div>
+  </div>
+  <footer>
+    <p>The Restoration Guide · Created by Cole LaTour · REL C 225 · Brigham Young University</p>
+    <p>Not an official publication of <a href="https://www.churchofjesuschrist.org" target="_blank">The Church of Jesus Christ of Latter-day Saints</a></p>
+  </footer>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const el=document.getElementById('page-'+id);
+  if(el){el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  document.querySelectorAll('.nav-link').forEach(l=>{
+    if(l.getAttribute('onclick')&&l.getAttribute('onclick').includes("'"+id+"'")){l.classList.add('active')}
+  });
+  document.getElementById('nav-links').classList.remove('open');
+}
+function toggleMenu(){document.getElementById('nav-links').classList.toggle('open')}
+function toggleFaq(btn){
+  const ans=btn.nextElementSibling;
+  const tog=btn.querySelector('.faq-toggle');
+  const isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(a=>{a.classList.remove('open');a.previousElementSibling.querySelector('.faq-toggle').textContent='+'});
+  if(!isOpen){ans.classList.add('open');tog.textContent='−'}
+}
+function filterTimeline(cat,btn){
+  document.querySelectorAll('.tl-item').forEach(i=>{i.style.display=(cat==='all'||i.dataset.cat===cat)?'flex':'none'});
+  document.querySelectorAll('.tf').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
